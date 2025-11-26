@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Pokémon Random App',
+      title: 'Temos que Pegar',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
@@ -57,7 +57,7 @@ class _PokemonPageState extends State<PokemonPage> {
 
         setState(() {
           pokemonName = data["name"];
-          pokemonImage = data["sprites"]["front_default"];
+          pokemonImage = data["sprites"]["other"]["official-artwork"]["front_default"];
           loading = false;
         });
       } else {
@@ -77,34 +77,88 @@ class _PokemonPageState extends State<PokemonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Pokémon Aleatório"),
-        centerTitle: true,
-      ),
       body: Center(
         child: loading
             ? const CircularProgressIndicator()
             : Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (pokemonImage.isNotEmpty)
-              Image.network(
-                pokemonImage,
-                height: 800,
-                width: 800,
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color(0xFF4A148C),
+                  width: 3,
+                  style: BorderStyle.solid,
+                ),
+                borderRadius: BorderRadius.circular(16),
               ),
-            const SizedBox(height: 20),
-            Text(
-              pokemonName.toUpperCase(),
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
+              child: const Text(
+                'Pokémon Aleatório',
+                style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1,
+                    color: Color(0xFF4A148C)
+                ),
               ),
             ),
-            const SizedBox(height: 40),
+
+            Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: const BorderSide(
+                  color: Color(0xFF4A148C),
+                  width: 3,
+                ),
+              ),
+              margin:const EdgeInsets.all(45),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    if (pokemonImage.isNotEmpty)
+                      Image.network(
+                        pokemonImage,
+                        height: 160,
+                        width: 160,
+                      ),
+
+                    const SizedBox(height: 12),
+
+                    Text(
+                      pokemonName.toUpperCase(),
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4A148C),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 24,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
               onPressed: fetchRandomPokemon,
-              child: const Text("Buscar Pokémon"),
+              child: const Text(
+                "Buscar Pokémon",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
