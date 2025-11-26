@@ -1,6 +1,6 @@
-# pokemon
+# Pokemon
 
-A new Flutter project.
+Temos que pegar!
 
 ## Getting Started
 
